@@ -16,7 +16,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
-const origins = ["http://localhost:5173"];
+const origins = ["http://localhost:5173","https://maobugichi.github.io/toy-store/"];
 const server = http.createServer(app);
 
 app.use(express.json());
