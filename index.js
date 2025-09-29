@@ -16,7 +16,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
-const origins = ["http://localhost:5173","https://maobugichi.github.io/toy-store/"];
+const origins = ["http://localhost:5173","https://maobugichi.github.io"];
 const server = http.createServer(app);
 
 app.use(express.json());
@@ -28,7 +28,8 @@ app.use(passport.session());
 
 app.use(cors({
     origin:origins,
-    credentials:true
+    credentials:true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 }));
 
 app.use("/auth", authRouter);
