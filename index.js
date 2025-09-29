@@ -20,6 +20,13 @@ const port = process.env.PORT;
 const origins = ["http://localhost:5173","https://maobugichi.github.io"];
 const server = http.createServer(app);
 
+app.use(cors({
+    origin:origins,
+    credentials:true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+}));
+
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(session({ secret:process.env.JWT_SECRET, resave: false, saveUninitialized: false}))
@@ -27,11 +34,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use(cors({
-    origin:origins,
-    credentials:true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-}));
 
 app.use("/auth", authRouter);
 
