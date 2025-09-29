@@ -37,9 +37,9 @@ export async function getCartItems(req,res) {
 
     try {
         const items = await pool.query(
-         `SELECT ci. *, p.name , p.price
+         `SELECT ci. *, p.base_name , p.price
           FROM cart_items ci
-          JOIN products pON ci.product_id = p.id
+          JOIN products p ON ci.product_id = p.id
           WHERE ci.cart_id = $1
          `,
          [cartId]
