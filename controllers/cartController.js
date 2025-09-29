@@ -50,3 +50,53 @@ export async function getCartItems(req,res) {
         res.status(500).json({ error: "Server error" }); 
     }
 }
+
+
+export async function updateCartItem(req, res) {
+  const { cartItemId } = req.params;
+  const { quantity } = req.body;
+
+  if (!quantity || quantity < 1) {
+    return res.status(400).json({ error: "Quantity must be at least 1" });
+  }
+
+  try {
+    const updated = await pool.query(
+      `UPDATE cart_items 
+       SET quantity = $1 
+       WHERE id = $2 
+       RETURNING *`,
+      [quantity, cartItemId]
+    );
+
+    if (updated.rows.length === 0) {
+      return res.status(404).json({ error: "Cart item not found" });
+    }
+
+    res.json(updated.rows[0]);
+  } catch (err) {
+    console.error("Error updating cart item:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+}
+
+
+export async function removeCartItem(req, res) {
+  const { cartItemId } = req.params;
+
+  try {
+    const deleted = await pool.query(
+      `DELETE FROM cart_items WHERE id = $1 RETURNING *`,
+      [cartItemId]
+    );
+
+    if (deleted.rows.length === 0) {
+      return res.status(404).json({ error: "Cart item not found" });
+    }
+
+    res.json({ success: true, item: deleted.rows[0] });
+  } catch (err) {
+    console.error("Error deleting cart item:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+}
