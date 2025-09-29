@@ -10,6 +10,7 @@ import session from "express-session";
 import authRouter from "./router/authRoutes.js";
 import passport from "passport";
 import cartRouter from "./router/cartRouter.js";
+import mergeRouter from "./router/merge.js";
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use('/api/products', uploadProductRouter);
 app.use('/api/products',productRouter)
 app.use('/api/products', uploadCategoryRouter);
 app.use('/api/cart', cartRouter);
+app.use('/api/cart', mergeRouter);
 server.listen(port,() => {
     console.log(`server started on port ${port}`);
 })
