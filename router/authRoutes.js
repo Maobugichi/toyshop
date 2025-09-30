@@ -43,6 +43,21 @@ authRouter.post("/login", async (req,res) => {
     }
 })
 
+authRouter.post("/logout", async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    })
+    return res.json({ message: "Logged out successfully" })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Failed to log out" })
+  }
+})
+
+
 authRouter.get("/google" , passport.authenticate("google" , {scope:['profile' , 'email']}));
 
 authRouter.get("/google/callback" , passport.authenticate("google", {failureRedirect: "/login"}),
