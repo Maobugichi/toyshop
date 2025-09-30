@@ -4,6 +4,8 @@ import { checkAuth } from "../check-auth.js";
 
 const mergeRouter = Router();
 
+mergeRouter.use(checkAuth)
+
 mergeRouter.post("/merge" , checkAuth , async (req,res) => {
     const userId = req.user.id;
     
