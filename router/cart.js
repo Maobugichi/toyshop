@@ -4,7 +4,7 @@ import pool from "../db"; // your pg Pool
 
 const router = express.Router();
 
-// POST /api/cart/add
+
 router.post("/add", async (req, res) => {
   const { userId, productId, quantity } = req.body;
 

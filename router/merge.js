@@ -30,7 +30,7 @@ mergeRouter.post("/merge", checkAuth, async (req, res) => {
       cartId = rows[0].id;
     }
 
-    // 2. Merge guest cart items
+    
     for (const item of guestCart) {
       const { product_id, quantity } = item;
 
