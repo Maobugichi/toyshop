@@ -7,6 +7,8 @@ const mergeRouter = Router();
 mergeRouter.use(checkAuth)
 
 mergeRouter.post("/merge" , checkAuth , async (req,res) => {
+    console.log("Cookies received:", req.cookies);
+    console.log("User from auth:", req.user);
     const userId = req.user.id;
     
     const guestCart = req.body.guestCart;
