@@ -38,7 +38,7 @@ authRouter.post("/login", async (req,res) => {
             domain: isProduction ? '.onrender.com' : undefined, 
         });
 
-        return res.json({ user: { id: user.id, email: user.email, name: user.name } , cartId , token });
+        return res.json({ user: { id: user.id, email: user.email, name: user.name } , cartId });
 
     } catch(err) {
         console.log(err)
