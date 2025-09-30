@@ -28,8 +28,7 @@ authRouter.post("/login", async (req,res) => {
         const { email , password } = req.body;
         const { user, token , cartId } = await loginLocal(email,password);
 
-         const isProduction = process.env.NODE_ENV === 'production';
-        
+         
        
         res.cookie("token", token, {
             httpOnly: true,

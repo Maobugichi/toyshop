@@ -8,7 +8,7 @@ mergeRouter.use(checkAuth)
 
 mergeRouter.post("/merge" , async (req,res) => {
    
-    const userId = req.user.userId;
+    const userId = 13
     
     const guestCart = req.body.guestCart;
 
@@ -48,7 +48,7 @@ mergeRouter.post("/merge" , async (req,res) => {
         [userId]
         );
 
-        res.json({ success: true, cart: updatedCart.rows });
+        res.json({ success: true, cart: updatedCart.rows  , user:req.user});
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Cart merge failed" });
