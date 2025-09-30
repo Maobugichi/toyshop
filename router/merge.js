@@ -4,11 +4,9 @@ import { checkAuth } from "../check-auth.js";
 
 const mergeRouter = Router();
 
-mergeRouter.use(checkAuth)
 
-mergeRouter.post("/merge" , async (req,res) => {
-   
-    const userId = 13
+mergeRouter.post("/merge" , checkAuth , async (req,res) => {
+    const userId = req.user.id;
     
     const guestCart = req.body.guestCart;
 
@@ -48,7 +46,7 @@ mergeRouter.post("/merge" , async (req,res) => {
         [userId]
         );
 
-        res.json({ success: true, cart: updatedCart.rows  , user:req.user});
+        res.json({ success: true, cart: updatedCart.rows });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Cart merge failed" });

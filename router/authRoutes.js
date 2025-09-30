@@ -27,9 +27,6 @@ authRouter.post("/login", async (req,res) => {
     try {
         const { email , password } = req.body;
         const { user, token , cartId } = await loginLocal(email,password);
-
-         
-       
         res.cookie("token", token, {
             httpOnly: true,
             secure: false,    // because you're testing locally
