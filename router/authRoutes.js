@@ -29,7 +29,7 @@ authRouter.post("/login", async (req,res) => {
         const { user, token , cartId } = await loginLocal(email,password);
         res.cookie("token", token, {
             httpOnly: true,
-            secure: true,           // must be true because Render is HTTPS
+            secure: true,           
             sameSite: "none",       // required for cross-site
             maxAge: 7 * 24 * 60 * 60 * 1000,
             path: "/"
