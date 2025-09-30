@@ -6,6 +6,7 @@ const mergeRouter = Router();
 
 mergeRouter.post("/merge" , checkAuth , async (req,res) => {
     const userId = req.user.id;
+    
     const guestCart = req.body.guestCart;
 
     if (!Array.isArray(guestCart)) {

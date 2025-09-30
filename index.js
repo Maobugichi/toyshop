@@ -36,7 +36,6 @@ app.use(passport.session());
 
 
 app.use("/auth", authRouter);
-
 app.use('/api/products', uploadProductRouter);
 app.use('/api/products',productRouter)
 app.use('/api/products', uploadCategoryRouter);
