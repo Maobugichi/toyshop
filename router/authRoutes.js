@@ -30,13 +30,14 @@ authRouter.post("/login", async (req,res) => {
 
          const isProduction = process.env.NODE_ENV === 'production';
         
-        res.cookie("token", token , {
+       
+        res.cookie("token", token, {
             httpOnly: true,
-            secure: true, 
-            sameSite: "none",
+            secure: false,    // because you're testing locally
+            sameSite: "lax",  // works fine while dev
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            domain: isProduction ? '.onrender.com' : undefined, 
-        });
+            path: "/"
+            });
 
         return res.json({ user: { id: user.id, email: user.email, name: user.name } , cartId });
 
