@@ -14,9 +14,13 @@ checkoutRouter.post("/", checkAuth , async (req,res) => {
   }
 
   try {
-    const orderResult = await pool.query("INSERT INTO orders (user_id , shipping_method , promo_code, status , created_at VALUES ($1,$2,$3,$4,NOW()) RETURNING id",
-        [userId,shippingMethod,promoCode || null, "pending"]
-    )
+    const orderResult = await pool.query(
+    `INSERT INTO orders (user_id, shipping_method, promo_code, status, created_at)
+    VALUES ($1, $2, $3, $4, NOW())
+    RETURNING id`,
+    [userId, shippingMethod, promoCode || null, "pending"]
+    );
+
 
     const orderId = orderResult.rows[0].id;
 
