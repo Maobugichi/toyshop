@@ -18,7 +18,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
-const origins = ["http://localhost:5173","https://maobugichi.github.io","https://thetoyshop.net.ng/"];
+const origins = ["http://localhost:5173","https://maobugichi.github.io","https://thetoyshop.net.ng"];
 const server = http.createServer(app);
 
 app.use(cors({
