@@ -1,6 +1,5 @@
-// routes/cart.ts
 import express from "express";
-import pool from "../db"; // your pg Pool
+import pool from "../db"; 
 
 const router = express.Router();
 
