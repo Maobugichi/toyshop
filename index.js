@@ -46,7 +46,9 @@ app.use('/api/products', uploadCategoryRouter);
 app.use('/api/checkout', checkoutRouter)
 app.use('/api/cart', cartRouter);
 app.use('/api/cart', mergeRouter);
-app.use('/api/payments' , checkAuth , nowRouter)
+app.use('/api/payments' , checkAuth , nowRouter);
+
+
 server.listen(port,() => {
     console.log(`server started on port ${port}`);
 })

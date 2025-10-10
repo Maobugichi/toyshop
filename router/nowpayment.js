@@ -3,9 +3,10 @@ import axios from "axios";
 import pool from "../db.js";
 
 const nowRouter = Router();
+
+
 const API_KEY = process.env.NOWPAYMENTS_API_KEY;
 const BASE_URL = process.env.BASE_URL;
-
 
 nowRouter.get('/currencies' , async (req,res) => {
     try {
@@ -18,6 +19,7 @@ nowRouter.get('/currencies' , async (req,res) => {
      )
      res.json(responseList)
     } catch(err) {
+        console.log(err)
         res.status(500).json(err)
     }
     
