@@ -47,14 +47,16 @@ nowRouter.post("/create-payment", async (req, res) => {
       }
     );
 
+    const data = response.data
+    
+
     await pool.query(
-      `INSERT INTO payments (order_id, payment_id, invoice_url, pay_currency, price_currency, price_amount, payment_status)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+      `INSERT INTO payments (order_id, payment_id, pay_currency, price_currency, price_amount, payment_status)
+       VALUES ($1, $2, $3, $4, $5, $6)
        ON CONFLICT (payment_id) DO NOTHING`,
       [
         order_id,
         data.payment_id,
-        data.invoice_url || data.payment_url,
         pay_currency,
         price_currency,
         price_amount,
