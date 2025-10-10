@@ -17,7 +17,7 @@ nowRouter.get('/currencies' , async (req,res) => {
         },
       }
      )
-     res.json(responseList)
+     res.json(responseList.data)
     } catch(err) {
         console.log(err)
         res.status(500).json(err)
