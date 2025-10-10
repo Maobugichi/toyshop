@@ -27,6 +27,13 @@ export async function signupLocal(email,name,password) {
      "INSERT INTO auth_providers (user_id , provider, provider_id, password_hash) VALUES ($1, $2, $3,$4)",
      [user.id,'local', email, passwordHash]
     );
+
+     await pool.query(
+      `INSERT INTO watchlists (user_id, name) 
+       VALUES ($1, 'Default')`,
+      [user.id]
+    );
+    
     const cartId = await getOrCreateCart(user.id);
     const token = jwt.sign(
       { userId: user.id, email: user.email },

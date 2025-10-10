@@ -12,6 +12,8 @@ import passport from "passport";
 import cartRouter from "./router/cartRouter.js";
 import mergeRouter from "./router/merge.js";
 import checkoutRouter from "./router/checkoutRouter.js";
+import { checkAuth } from "./check-auth.js";
+import nowRouter from "./router/nowpayment.js";
 
 dotenv.config();
 
@@ -44,6 +46,7 @@ app.use('/api/products', uploadCategoryRouter);
 app.use('/api/checkout', checkoutRouter)
 app.use('/api/cart', cartRouter);
 app.use('/api/cart', mergeRouter);
+app.use('/api/payments' , checkAuth , nowRouter)
 server.listen(port,() => {
     console.log(`server started on port ${port}`);
 })
