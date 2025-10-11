@@ -5,7 +5,7 @@ import { checkAuth } from "../check-auth.js";
 const reviewRouter = Router();
 
 
-reviewRouter.post("/", async (req, res) => {
+reviewRouter.post("/", checkAuth , async (req, res) => {
  const user_id = req.user.userId;
   try {
     const { username, review, stars } = req.body;
@@ -26,7 +26,7 @@ reviewRouter.post("/", async (req, res) => {
 });
 
 
-reviewRouter.get("/", checkAuth , async (req, res) => {
+reviewRouter.get("/" , async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT * FROM reviews ORDER BY created_at DESC`
