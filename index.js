@@ -14,6 +14,7 @@ import mergeRouter from "./router/merge.js";
 import checkoutRouter from "./router/checkoutRouter.js";
 import { checkAuth } from "./check-auth.js";
 import nowRouter from "./router/nowpayment.js";
+import reviewRouter from "./router/review.js";
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use('/api/checkout', checkoutRouter)
 app.use('/api/cart', cartRouter);
 app.use('/api/cart', mergeRouter);
 app.use('/api/payments' , checkAuth , nowRouter);
+app.use('/api/reviews', checkAuth , reviewRouter)
 
 
 server.listen(port,() => {
