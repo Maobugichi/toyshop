@@ -9,9 +9,7 @@ const API_KEY = process.env.NOWPAYMENTS_API_KEY;
 const BASE_URL = process.env.BASE_URL;
 const IPN_SECRET = process.env.NOWPAYMENTS_IPN_SECRET; // Add this to your .env
 
-// ============================================
-// Verify NOWPayments webhook signature
-// ============================================
+
 function verifyWebhookSignature(req, ipnSecret) {
   const receivedSignature = req.headers['x-nowpayments-sig'];
   if (!receivedSignature || !ipnSecret) return false;
@@ -218,7 +216,6 @@ nowRouter.post("/webhook", async (req, res) => {
     const p = req.body;
     console.log("NOWPayments webhook received:", JSON.stringify(p, null, 2));
 
-    // Verify webhook signature for security (if IPN secret is configured)
     if (IPN_SECRET) {
       const isValid = verifyWebhookSignature(req, IPN_SECRET);
       if (!isValid) {
@@ -251,8 +248,8 @@ nowRouter.post("/webhook", async (req, res) => {
 
     const { order_id, payment_status } = updateResult.rows[0];
 
-    // Handle different payment statuses
-    switch (p.payment_status) {
+    
+    /*switch (p.payment_status) {
       case "finished":
       case "confirmed":
         await pool.query(
@@ -293,7 +290,7 @@ nowRouter.post("/webhook", async (req, res) => {
 
       default:
         console.log(`ℹ️ Unknown payment status: ${p.payment_status}`);
-    }
+    }*/
 
     
     res.status(200).json({ success: true });
