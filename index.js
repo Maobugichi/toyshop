@@ -48,7 +48,7 @@ app.use('/api/checkout', checkoutRouter)
 app.use('/api/cart', cartRouter);
 app.use('/api/cart', mergeRouter);
 app.use('/api/payments' , checkAuth , nowRouter);
-app.use('/api/reviews', checkAuth , reviewRouter)
+app.use('/api/reviews', reviewRouter)
 
 
 server.listen(port,() => {

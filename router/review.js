@@ -1,5 +1,6 @@
 import { Router } from "express";
 import pool from "../db.js";
+import { checkAuth } from "../check-auth.js";
 
 const reviewRouter = Router();
 
@@ -25,7 +26,7 @@ reviewRouter.post("/", async (req, res) => {
 });
 
 
-reviewRouter.get("/", async (req, res) => {
+reviewRouter.get("/", checkAuth , async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT * FROM reviews ORDER BY created_at DESC`
