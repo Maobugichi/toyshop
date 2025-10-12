@@ -34,8 +34,19 @@ authRouter.post("/login", async (req,res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
             path: "/"
         })
+
+
+        return res.json({ 
+            user: { 
+                id: user.id, 
+                email: user.email, 
+                name: user.name 
+            },
+            cartId,
+            token
+        });
             
-        return res.json({ user: { id: user.id, email: user.email, name: user.name } , cartId });
+       
 
     } catch(err) {
         console.log(err)

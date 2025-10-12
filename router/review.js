@@ -4,9 +4,9 @@ import { checkAuth } from "../check-auth.js";
 
 const reviewRouter = Router();
 
-
 reviewRouter.post("/", checkAuth , async (req, res) => {
  const user_id = req.user.userId;
+ 
   try {
     const { username, review, stars } = req.body;
     if (!user_id || !review || !stars)
