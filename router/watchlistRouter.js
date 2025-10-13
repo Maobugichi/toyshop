@@ -4,8 +4,8 @@ import { checkAuth } from "../check-auth.js";
 
 const wishRouter = Router();
 
-wishRouter.get("/",  async (req, res) => {
-    const { id:userId } = req.user;
+wishRouter.get("/",  checkAuth, async (req, res) => {
+    const { userId } = req.user;
     const check = await pool.query(
     `SELECT id FROM watchlists WHERE user_id = $1`,
     [userId]
@@ -36,14 +36,16 @@ wishRouter.get("/",  async (req, res) => {
 
 wishRouter.post("/", checkAuth , async (req, res) => {
   try {
-    const { id } = req.user;
+    const { userId } = req.user;
+    console.log(req.user)
+    console.log(userId)
     const { name } = req.body;
 
     const result = await pool.query(
       `INSERT INTO watchlists (user_id, name) 
        VALUES ($1, $2) 
        RETURNING *`,
-      [id, name || "Default"]
+      [userId, name || "Default"]
     );
 
     res.status(201).json(result.rows[0]);
@@ -55,7 +57,7 @@ wishRouter.post("/", checkAuth , async (req, res) => {
 
 wishRouter.delete("/:watchlistId", checkAuth, async (req, res) => {
   try {
-    const { id:userId } = req.user;
+    const { userId } = req.user;
     const { watchlistId } = req.params;
 
     await pool.query(
@@ -95,7 +97,7 @@ wishRouter.get("/:watchlistId/items", checkAuth, async (req, res) => {
 
 wishRouter.post("/:watchlistId/items", checkAuth, async (req, res) => {
   try {
-    const { id:userId } = req.user;
+    const { userId } = req.user;
     const { watchlistId } = req.params;
     const { productId } = req.body;
 
