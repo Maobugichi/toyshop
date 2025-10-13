@@ -4,7 +4,7 @@ import { checkAuth } from "../check-auth.js";
 
 const wishRouter = Router();
 
-wishRouter.get("/", checkAuth, async (req, res) => {
+wishRouter.get("/",  async (req, res) => {
     const { id:userId } = req.user;
     const check = await pool.query(
     `SELECT id FROM watchlists WHERE user_id = $1`,
@@ -34,16 +34,16 @@ wishRouter.get("/", checkAuth, async (req, res) => {
 });
 
 
-wishRouter.post("/", checkAuth, async (req, res) => {
+wishRouter.post("/", checkAuth , async (req, res) => {
   try {
-    const { id:userId } = req.user;
+    const { id } = req.user;
     const { name } = req.body;
 
     const result = await pool.query(
       `INSERT INTO watchlists (user_id, name) 
        VALUES ($1, $2) 
        RETURNING *`,
-      [userId, name || "Default"]
+      [id, name || "Default"]
     );
 
     res.status(201).json(result.rows[0]);
