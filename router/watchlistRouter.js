@@ -75,7 +75,7 @@ wishRouter.delete("/:watchlistId", checkAuth, async (req, res) => {
 
 wishRouter.get("/:watchlistId/items", checkAuth, async (req, res) => {
   try {
-    const { id:userId } = req.user;
+    const { userId } = req.user;
     const { watchlistId } = req.params;
 
     const result = await pool.query(
@@ -131,7 +131,7 @@ wishRouter.post("/:watchlistId/items", checkAuth, async (req, res) => {
 
 wishRouter.delete("/:watchlistId/items/:productId", checkAuth, async (req, res) => {
   try {
-    const { id:userId } = req.user;
+    const { userId } = req.user;
     const { watchlistId, productId } = req.params;
 
    
