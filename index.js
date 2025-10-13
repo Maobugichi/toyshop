@@ -50,7 +50,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/cart', mergeRouter);
 app.use('/api/payments' , checkAuth , nowRouter);
 app.use('/api/reviews', reviewRouter);
-app.use('/api/wishlist' , wishRouter)
+app.use('/api/watchlist' , wishRouter)
 
 
 server.listen(port,() => {
