@@ -78,15 +78,18 @@ wishRouter.get("/:watchlistId/items", checkAuth, async (req, res) => {
     const { userId } = req.user;
     const { watchlistId } = req.params;
 
-    const result = await pool.query(
-      `SELECT wi.id, wi.product_id, p.name, p.price, p.image_url, wi.added_at
-       FROM watchlist_items wi
-       JOIN products p ON wi.product_id = p.id
-       JOIN watchlists w ON wi.watchlist_id = w.id
-       WHERE wi.watchlist_id = $1 AND w.user_id = $2
-       ORDER BY wi.added_at DESC`,
+      const result = await pool.query(
+      `SELECT wi.id, wi.product_id, p.name, p.price, 
+              p.images->>'primary' as image_url,
+              wi.added_at
+      FROM watchlist_items wi
+      JOIN products p ON wi.product_id = p.id
+      JOIN watchlists w ON wi.watchlist_id = w.id
+      WHERE wi.watchlist_id = $1 AND w.user_id = $2
+      ORDER BY wi.added_at DESC`,
       [watchlistId, userId]
     );
+    
 
     res.json(result.rows);
   } catch (err) {
