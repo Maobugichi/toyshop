@@ -2,10 +2,10 @@ import { Router } from "express";
 import pool from "../db.js";
 import { checkAuth } from "../check-auth.js";
 
-const router = Router();
+const wishRouter = Router();
 
-router.get("/", checkAuth, async (req, res) => {
-
+wishRouter.get("/", checkAuth, async (req, res) => {
+    const { id:userId } = req.user;
     const check = await pool.query(
     `SELECT id FROM watchlists WHERE user_id = $1`,
     [userId]
@@ -19,7 +19,7 @@ router.get("/", checkAuth, async (req, res) => {
     }
 
   try {
-    const { userId } = req.user;
+   
     const result = await pool.query(
       `SELECT id, name, created_at 
        FROM watchlists 
@@ -34,9 +34,9 @@ router.get("/", checkAuth, async (req, res) => {
 });
 
 
-router.post("/", authenticateUser, async (req, res) => {
+wishRouter.post("/", checkAuth, async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { id:userId } = req.user;
     const { name } = req.body;
 
     const result = await pool.query(
@@ -53,9 +53,9 @@ router.post("/", authenticateUser, async (req, res) => {
 });
 
 
-router.delete("/:watchlistId", authenticateUser, async (req, res) => {
+wishRouter.delete("/:watchlistId", checkAuth, async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { id:userId } = req.user;
     const { watchlistId } = req.params;
 
     await pool.query(
@@ -71,9 +71,9 @@ router.delete("/:watchlistId", authenticateUser, async (req, res) => {
 });
 
 
-router.get("/:watchlistId/items", authenticateUser, async (req, res) => {
+wishRouter.get("/:watchlistId/items", checkAuth, async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { id:userId } = req.user;
     const { watchlistId } = req.params;
 
     const result = await pool.query(
@@ -92,14 +92,14 @@ router.get("/:watchlistId/items", authenticateUser, async (req, res) => {
   }
 });
 
-// ✅ Add item to a watchlist
-router.post("/:watchlistId/items", authenticateUser, async (req, res) => {
+
+wishRouter.post("/:watchlistId/items", checkAuth, async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { id:userId } = req.user;
     const { watchlistId } = req.params;
     const { productId } = req.body;
 
-    // check ownership of watchlist
+  
     const check = await pool.query(
       `SELECT id FROM watchlists WHERE id = $1 AND user_id = $2`,
       [watchlistId, userId]
@@ -126,13 +126,13 @@ router.post("/:watchlistId/items", authenticateUser, async (req, res) => {
   }
 });
 
-// ✅ Remove item from a watchlist
-router.delete("/:watchlistId/items/:productId", authenticateUser, async (req, res) => {
+
+wishRouter.delete("/:watchlistId/items/:productId", checkAuth, async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { id:userId } = req.user;
     const { watchlistId, productId } = req.params;
 
-    // ensure user owns the watchlist
+   
     const check = await pool.query(
       `SELECT id FROM watchlists WHERE id = $1 AND user_id = $2`,
       [watchlistId, userId]
@@ -153,4 +153,4 @@ router.delete("/:watchlistId/items/:productId", authenticateUser, async (req, re
   }
 });
 
-export default router;
+export default wishRouter;
