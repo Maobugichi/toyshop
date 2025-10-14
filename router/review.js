@@ -4,7 +4,6 @@ import { checkAuth } from "../check-auth.js";
 
 const reviewRouter = Router();
 
-// Create a new review
 reviewRouter.post("/", checkAuth, async (req, res) => {
   const user_id = req.user.userId;
 
@@ -81,13 +80,12 @@ reviewRouter.get("/product/:product_id", async (req, res) => {
       [product_id]
     );
 
-    // Get stats (average rating and count)
-    const statsResult = await pool.query(
+      const statsResult = await pool.query(
       `SELECT 
-        COALESCE(AVG(stars), 0) as avg_rating,
-        COUNT(*) as review_count
-       FROM reviews 
-       WHERE product_id = $1`,
+        COALESCE(ROUND(AVG(stars)::numeric, 2), 0)::float as avg_rating,
+        COUNT(*)::int as review_count
+      FROM reviews 
+      WHERE product_id = $1`,
       [product_id]
     );
 
