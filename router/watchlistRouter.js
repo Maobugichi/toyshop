@@ -35,23 +35,21 @@ wishRouter.get("/",  checkAuth, async (req, res) => {
 
 
 wishRouter.post("/", checkAuth , async (req, res) => {
-  try {
     const { userId } = req.user;
-    console.log(req.user)
     console.log(userId)
-    const { name } = req.body;
+    try {
+      const { name } = req.body;
+      const result = await pool.query(
+        `INSERT INTO watchlists (user_id, name) 
+        VALUES ($1, $2) 
+        RETURNING *`,
+        [userId, name || "Default"]
+      );
 
-    const result = await pool.query(
-      `INSERT INTO watchlists (user_id, name) 
-       VALUES ($1, $2) 
-       RETURNING *`,
-      [userId, name || "Default"]
-    );
-
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+      res.status(201).json(result.rows[0]);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
 });
 
 
