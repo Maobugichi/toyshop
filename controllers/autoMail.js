@@ -18,8 +18,8 @@ const sendEmail = async (emailData) => {
 export const sendWelcomeEmail = async (userEmail, userName) => {
   await sendEmail({
     to: [{ email: userEmail, name: userName }],
-    sender: { email: "noreply@thetoyshop.net.ng", name: "YourApp" },
-    subject: "Welcome to YourApp!",
+    sender: { email: "noreply@thetoyshop.net.ng", name: "theToyshop" },
+    subject: "Welcome to theToyshop!",
     htmlContent: `
       <div style="font-family: sans-serif; text-align: center;">
         <img src="https://res.cloudinary.com/dao2a3ib4/image/upload/v1759248907/toy-logoo_qt8unk.png" 
@@ -35,12 +35,15 @@ export const sendWelcomeEmail = async (userEmail, userName) => {
 export const sendTrackingEmail = async (userEmail, orderId, trackingId) => {
   await sendEmail({
     to: [{ email: userEmail }],
-    sender: { email: "orders@thetoyshop.net.ng", name: "YourApp Orders" },
+    sender: { email: "orders@thetoyshop.net.ng", name: "theToyshop Orders" },
     subject: `Order #${orderId} - Tracking Information`,
     htmlContent: `
       <div style="font-family: sans-serif; text-align: center;">
-        <img src="https://res.cloudinary.com/dao2a3ib4/image/upload/v1759248907/toy-logoo_qt8unk.png" 
-             alt="YourApp Logo" width="100" style="margin-bottom: 20px;" />
+        <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; text-align: center;">
+          <img src="https://res.cloudinary.com/dao2a3ib4/image/upload/v1759248907/toy-logoo_qt8unk.png" 
+             alt="theToyshop Logo" width="100" style="margin-bottom: 20px;" />
+        </div>
+        
         <h2>Your order is on its way!</h2>
         <p>Tracking ID: <strong>${trackingId}</strong></p>
         <a href="https://thetoyshop.net.ng/track/${trackingId}" 
@@ -56,7 +59,7 @@ export const sendTrackingEmail = async (userEmail, orderId, trackingId) => {
 export const sendPromotionalEmail = async (userEmail, promoCode) => {
   await sendEmail({
     to: [{ email: userEmail }],
-    sender: { email: "deals@thetoyshop.net.ng", name: "YourApp Deals" },
+    sender: { email: "deals@thetoyshop.net.ng", name: "theToyshop Deals" },
     subject: "🎉 Special Offer Just for You!",
     htmlContent: `
       <div style="font-family: sans-serif; text-align: center;">
