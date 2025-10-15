@@ -21,9 +21,9 @@ export const sendWelcomeEmail = async (userEmail, userName , text) => {
     sender: { email: "noreply@thetoyshop.net.ng", name: "theToyshop" },
     subject: "Welcome to theToyshop!",
     htmlContent: `
-      <div style="font-family: sans-serif; text-align: center;">
+      <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; text-align: center;">
         <img src="https://res.cloudinary.com/dao2a3ib4/image/upload/v1759248907/toy-logoo_qt8unk.png" 
-             alt="YourApp Logo" width="100" style="margin-bottom: 20px;" />
+             alt="theToyshop Logo" width="100" style="margin-bottom: 20px;" />
         <h1>Welcome, ${userName}!</h1>
         <p>${text}🎉</p>
       </div>
