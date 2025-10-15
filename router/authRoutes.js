@@ -17,8 +17,8 @@ authRouter.post("/signup" , async (req,res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
             path: "/"
         })
-
-        await sendWelcomeEmail(user.email, user.name);
+        const text = "Thanks for signing up. We're excited to have you on board"
+        await sendWelcomeEmail(user.email, user.name , text );
         return res.json({ 
             user: { 
                 id: user.id, 

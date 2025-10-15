@@ -15,7 +15,7 @@ const sendEmail = async (emailData) => {
 };
 
 
-export const sendWelcomeEmail = async (userEmail, userName) => {
+export const sendWelcomeEmail = async (userEmail, userName , text) => {
   await sendEmail({
     to: [{ email: userEmail, name: userName }],
     sender: { email: "noreply@thetoyshop.net.ng", name: "theToyshop" },
@@ -25,7 +25,7 @@ export const sendWelcomeEmail = async (userEmail, userName) => {
         <img src="https://res.cloudinary.com/dao2a3ib4/image/upload/v1759248907/toy-logoo_qt8unk.png" 
              alt="YourApp Logo" width="100" style="margin-bottom: 20px;" />
         <h1>Welcome, ${userName}!</h1>
-        <p>Thanks for signing up. We're excited to have you on board 🎉</p>
+        <p>${text}🎉</p>
       </div>
     `,
   });

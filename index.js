@@ -16,6 +16,7 @@ import { checkAuth } from "./check-auth.js";
 import nowRouter from "./router/nowpayment.js";
 import reviewRouter from "./router/review.js";
 import wishRouter from "./router/watchlistRouter.js";
+import newsletterRouter from "./router/newsletterRouter.js";
 
 dotenv.config();
 
@@ -55,6 +56,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/cart', mergeRouter);
 app.use('/api/payments' , checkAuth , nowRouter);
 app.use('/api/reviews', reviewRouter);
+app.use("/api/newsletter", newsletterRouter);
 app.use('/api/watchlist' ,  wishRouter)
 
 
