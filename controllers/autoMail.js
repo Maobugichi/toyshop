@@ -18,8 +18,12 @@ export const sendWelcomeEmail = async (userEmail, userName) => {
       to: userEmail,
       subject: 'Welcome to YourApp!',
       html: `
+        <div style="font-family: sans-serif; text-align: center;">
+        <img src="'https://res.cloudinary.com/dao2a3ib4/image/upload/v1759248907/toy-logoo_qt8unk.png" 
+            alt="YourApp Logo" width="100" style="margin-bottom: 20px;" />
         <h1>Welcome, ${userName}!</h1>
-        <p>Thanks for signing up. We're excited to have you on board.</p>
+        <p>Thanks for signing up. We're excited to have you on board 🎉</p>
+        </div>
       `,
     });
     console.log('Welcome email sent');
@@ -36,9 +40,14 @@ export const sendTrackingEmail = async (userEmail, orderId, trackingId) => {
       to: userEmail,
       subject: `Order #${orderId} - Tracking Information`,
       html: `
-        <h2>Your order is on its way!</h2>
-        <p>Tracking ID: <strong>${trackingId}</strong></p>
-        <a href="https://thetoyshop.net.ng/track/${trackingId}">Track your order</a>
+          <div style="font-family: sans-serif; text-align: center;">
+            <img src="'https://res.cloudinary.com/dao2a3ib4/image/upload/v1759248907/toy-logoo_qt8unk.png" 
+                alt="YourApp Logo" width="100" style="margin-bottom: 20px;" />
+            <h2>Your order is on its way!</h2>
+            <p>Tracking ID: <strong>${trackingId}</strong></p>
+             <a href="https://thetoyshop.net.ng/track/${trackingId}">Track your order</a>
+          </div>
+       
       `,
     });
     console.log('Tracking email sent');
