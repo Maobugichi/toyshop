@@ -2,6 +2,7 @@ import { Router } from "express";
 import axios from "axios";
 import crypto from "crypto";
 import pool from "../db.js";
+import { sendTrackingEmail } from "../controllers/autoMail.js";
 
 const nowRouter = Router();
 
@@ -168,6 +169,11 @@ nowRouter.get("/payment-status/:paymentId", async (req, res) => {
             `UPDATE orders SET status = 'paid', updated_at = NOW() WHERE order_id = $1`,
             [payment.order_id]
           );
+           await sendTrackingEmail(
+            user.email, 
+            order.id, 
+            order.tracking_id
+          );
         }
       }
 
@@ -224,7 +230,7 @@ nowRouter.post("/webhook", async (req, res) => {
       }
     }
 
-    // Update payment in database
+  
     const updateResult = await pool.query(
       `UPDATE payments
        SET payment_status = $1, 
@@ -247,6 +253,7 @@ nowRouter.post("/webhook", async (req, res) => {
     }
 
     const { order_id, payment_status } = updateResult.rows[0];
+    
 
     
     /*switch (p.payment_status) {

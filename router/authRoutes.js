@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { signupLocal , loginLocal } from "../auth/local.js";
+import { sendWelcomeEmail } from "../controllers/autoMail.js";
 
 const authRouter = Router();
 
@@ -17,7 +18,7 @@ authRouter.post("/signup" , async (req,res) => {
             path: "/"
         })
 
-
+        await sendWelcomeEmail(user.email, user.name);
         return res.json({ 
             user: { 
                 id: user.id, 
