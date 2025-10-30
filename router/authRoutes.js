@@ -36,6 +36,7 @@ authRouter.post("/signup" , async (req,res) => {
 authRouter.post("/login", async (req,res) => {
     try {
         const { email , password } = req.body;
+        console.log(req.body)
         const { user, token , cartId } = await loginLocal(email,password);
         res.cookie("token", token, {
             httpOnly: true,
@@ -80,7 +81,6 @@ authRouter.get("/google" , passport.authenticate("google" , {scope:['profile' , 
 
 authRouter.get("/google/callback" , passport.authenticate("google", {failureRedirect: "/login"}),
  (req, res) => {
-    // here you could issue a JWT and redirect to frontend with it
     res.redirect("/");
   }
 );
