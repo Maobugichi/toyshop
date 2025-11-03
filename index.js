@@ -23,7 +23,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
-const origins = ["http://localhost:5173","https://maobugichi.github.io","https://thetoyshop.net.ng", "https://toyshop-y88v.onrender.com"];
+const origins = ["http://localhost:5173","https://maobugichi.github.io","https://thetoyshop.net.ng"];
 const server = http.createServer(app);
 
 app.use(cors({
@@ -45,6 +45,11 @@ app.use(session({ secret:process.env.JWT_SECRET, resave: false, saveUninitialize
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+app.get("/health", (req, res) => {
+  console.log("Received keep-alive ping 🟢");
+  res.status(200).send("OK");
+});
 
 
 app.use("/auth", authRouter);
