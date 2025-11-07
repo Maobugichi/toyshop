@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import pool from "../db.js";
+import { getOrCreateCart } from "../cart/cartService.js";
 
 passport.use(new GoogleStrategy(
     {
@@ -21,6 +22,7 @@ passport.use(new GoogleStrategy(
            );
 
            let user;
+           let isNewUser = false;
 
            if (providerRes.rows.length > 0) {
              const userRes = await pool.query(
@@ -39,7 +41,6 @@ passport.use(new GoogleStrategy(
 
                 await pool.query(
                     "INSERT INTO auth_providers(user_id, provider, provider_id) VALUES ($1, 'google', $2)",
-                  
                     [user.id, profile.id]
                 );
             } else {
@@ -48,13 +49,29 @@ passport.use(new GoogleStrategy(
                  [email, name, avatar]
                );
                user = userRes.rows[0];
+               isNewUser = true;
 
                 await pool.query(
                     "INSERT INTO auth_providers (user_id, provider, provider_id) VALUES ($1, 'google', $2)",
                     [user.id, profile.id]
                 );
+
+                // Create default watchlist for new users
+                await pool.query(
+                    `INSERT INTO watchlists (user_id, name) 
+                     VALUES ($1, 'Default')`,
+                    [user.id]
+                );
             }
            }
+
+           // Get or create cart for the user
+           const cartId = await getOrCreateCart(user.id);
+           
+           // Attach cartId to user object so it's available in the callback
+           user.cartId = cartId;
+           user.isNewUser = isNewUser;
+
            return done(null, user);
         } catch(err) {
             console.log(err);

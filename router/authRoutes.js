@@ -87,10 +87,9 @@ authRouter.get("/google/callback",
     }),
     async (req, res) => {
         try {
-          
             const token = jwt.sign(
-                { userId: req.user.id }, 
-                 process.env.JWT_SECRET,
+                { userId: req.user.id, email: req.user.email }, 
+                process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
             
@@ -102,11 +101,28 @@ authRouter.get("/google/callback",
                 path: "/"
             });
             
-           console.log(req.user)
-            //res.redirect("https://thetoyshop.net.ng/");
+           
+            res.cookie("auth_data", JSON.stringify({
+                user: {
+                    id: req.user.id,
+                    email: req.user.email,
+                    name: req.user.name,
+                    avatar_url: req.user.avatar_url
+                },
+                cartId: req.user.cartId
+            }), {
+                httpOnly: false, 
+                secure: true,
+                sameSite: "none",
+                maxAge: 60 * 1000, 
+                path: "/"
+            });
+            
+            res.redirect("https://thetoyshop.net.ng/?auth=success");
+            
         } catch (err) {
             console.error(err);
-            res.redirect("https://thetoyshop.net.ng/login");
+            res.redirect("https://thetoyshop.net.ng/login?error=auth_failed");
         }
     }
 );
