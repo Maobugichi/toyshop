@@ -79,10 +79,34 @@ authRouter.post("/logout", async (req, res) => {
 
 authRouter.get("/google" , passport.authenticate("google" , {scope:['profile' , 'email']}));
 
-authRouter.get("/google/callback" , passport.authenticate("google", {failureRedirect: "/login"}),
- (req, res) => {
-    res.redirect("/");
-  }
+authRouter.get("/google/callback", 
+    passport.authenticate("google", { 
+        failureRedirect: "/login",
+        session: false 
+    }),
+    async (req, res) => {
+        try {
+          
+            const token = jwt.sign(
+                { userId: req.user.id }, 
+                process.env.JWT_SECRET,
+                { expiresIn: '7d' }
+            );
+            
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "none",
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+                path: "/"
+            });
+            
+           
+            res.redirect("https://thetoyshop.net.ng/");
+        } catch (err) {
+            console.error(err);
+            res.redirect("/login?error=auth_failed");
+        }
+    }
 );
-
 export default authRouter
