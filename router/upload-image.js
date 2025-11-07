@@ -37,7 +37,7 @@ productRouter.post('/:productId/images', upload.array('images', 10), async (req,
     const { productId } = req.params;
     const files =   req.files
     const imageData = files.map((file, index) => {
-      //const urls = generateCloudinaryUrls(file.filename);
+    
       return {
         public_id: file.filename,
         //urls: urls,

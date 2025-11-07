@@ -102,8 +102,8 @@ authRouter.get("/google/callback",
                 path: "/"
             });
             
-           
-            res.redirect("https://thetoyshop.net.ng/");
+           console.log(req.user)
+            //res.redirect("https://thetoyshop.net.ng/");
         } catch (err) {
             console.error(err);
             res.redirect("https://thetoyshop.net.ng/login");
