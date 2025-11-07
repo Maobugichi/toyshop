@@ -2,6 +2,7 @@ import { Router } from "express";
 import passport from "passport";
 import { signupLocal , loginLocal } from "../auth/local.js";
 import { sendWelcomeEmail } from "../controllers/autoMail.js";
+import jwt  from "jsonwebtoken";
 
 const authRouter = Router();
 
@@ -89,7 +90,7 @@ authRouter.get("/google/callback",
           
             const token = jwt.sign(
                 { userId: req.user.id }, 
-                process.env.JWT_SECRET,
+                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
             
@@ -105,7 +106,7 @@ authRouter.get("/google/callback",
             res.redirect("https://thetoyshop.net.ng/");
         } catch (err) {
             console.error(err);
-            res.redirect("/login?error=auth_failed");
+            res.redirect("https://thetoyshop.net.ng/login");
         }
     }
 );
