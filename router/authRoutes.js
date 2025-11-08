@@ -114,9 +114,11 @@ authRouter.get("/google/callback",
                 },
                 cartId: req.user.cartId
             }), {
-                ...cookieOptions,
-                httpOnly: false, // readable by JavaScript
-                maxAge: 60 * 1000
+                httpOnly: false,  
+                secure: !isDevelopment,
+                sameSite: isDevelopment ? 'lax' : 'none',
+                maxAge: 60 * 1000,
+                path: "/"
             });
             
             const redirectUrl = process.env.FRONTEND_URL || "http://localhost:5173";
