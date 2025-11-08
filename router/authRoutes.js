@@ -138,7 +138,7 @@ authRouter.get("/google/callback",
                 }), {
                     ...cookieOptions,
                     httpOnly: false,
-                    maxAge: 60 * 1000
+                    maxAge: 5 * 60 * 1000 
                 });
                 
                 res.redirect(`${redirectUrl}/#/auth/callback?auth=success`);
