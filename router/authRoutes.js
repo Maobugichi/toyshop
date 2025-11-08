@@ -87,21 +87,24 @@ authRouter.get("/google/callback",
     }),
     async (req, res) => {
         try {
+            const isDevelopment = process.env.NODE_ENV === 'development';
+            
             const token = jwt.sign(
                 { userId: req.user.id, email: req.user.email }, 
                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
             
-            res.cookie("token", token, {
+            const cookieOptions = {
                 httpOnly: true,
-                secure: true,
-                sameSite: "none",
+                secure: !isDevelopment, 
+                sameSite: isDevelopment ? 'lax' : 'none',
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 path: "/"
-            });
+            };
             
-           
+            res.cookie("token", token, cookieOptions);
+            
             res.cookie("auth_data", JSON.stringify({
                 user: {
                     id: req.user.id,
@@ -111,18 +114,18 @@ authRouter.get("/google/callback",
                 },
                 cartId: req.user.cartId
             }), {
-                httpOnly: false, 
-                secure: true,
-                sameSite: "none",
-                maxAge: 60 * 1000, 
-                path: "/"
+                ...cookieOptions,
+                httpOnly: false, // readable by JavaScript
+                maxAge: 60 * 1000
             });
             
-            res.redirect("http://localhost:5173/?auth=success");
+            const redirectUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+            res.redirect(`${redirectUrl}/?auth=success`);
             
         } catch (err) {
             console.error(err);
-            res.redirect("https://thetoyshop.net.ng/login?error=auth_failed");
+            const redirectUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+            res.redirect(`${redirectUrl}/login?error=auth_failed`);
         }
     }
 );
