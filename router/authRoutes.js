@@ -95,34 +95,54 @@ authRouter.get("/google/callback",
                 { expiresIn: '7d' }
             );
             
-            const cookieOptions = {
-                httpOnly: true,
-                secure: !isDevelopment, 
-                sameSite: isDevelopment ? 'lax' : 'none',
-                maxAge: 7 * 24 * 60 * 60 * 1000,
-                path: "/"
-            };
-            
-            res.cookie("token", token, cookieOptions);
-            
-            res.cookie("auth_data", JSON.stringify({
-                user: {
-                    id: req.user.id,
-                    email: req.user.email,
-                    name: req.user.name,
-                    avatar_url: req.user.avatar_url
-                },
-                cartId: req.user.cartId
-            }), {
-                httpOnly: false,  
-                secure: !isDevelopment,
-                sameSite: isDevelopment ? 'lax' : 'none',
-                maxAge: 60 * 1000,
-                path: "/"
-            });
-            
             const redirectUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-           res.redirect(`${redirectUrl}/auth/callback?auth=success`);
+            
+            console.log(isDevelopment)
+            if (isDevelopment) {
+               
+                const authData = {
+                    user: {
+                        id: req.user.id,
+                        email: req.user.email,
+                        name: req.user.name,
+                        avatar_url: req.user.avatar_url
+                    },
+                    cartId: req.user.cartId,
+                    token: token
+                };
+                
+                const encodedData = encodeURIComponent(JSON.stringify(authData));
+                res.redirect(`${redirectUrl}/auth/callback?auth=success&data=${encodedData}`);
+                
+            } else {
+              
+                const cookieOptions = {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: 'none',
+                    maxAge: 7 * 24 * 60 * 60 * 1000,
+                    path: "/",
+                    domain: '.thetoyshop.net.ng' 
+                };
+                
+                res.cookie("token", token, cookieOptions);
+                
+                res.cookie("auth_data", JSON.stringify({
+                    user: {
+                        id: req.user.id,
+                        email: req.user.email,
+                        name: req.user.name,
+                        avatar_url: req.user.avatar_url
+                    },
+                    cartId: req.user.cartId
+                }), {
+                    ...cookieOptions,
+                    httpOnly: false,
+                    maxAge: 60 * 1000
+                });
+                
+                res.redirect(`${redirectUrl}/auth/callback?auth=success`);
+            }
             
         } catch (err) {
             console.error(err);
