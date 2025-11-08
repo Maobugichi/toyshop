@@ -23,25 +23,27 @@ dotenv.config();
 
 
 const app = express();
+
 const port = process.env.PORT;
 const origins = ["http://localhost:5173","https://maobugichi.github.io","https://thetoyshop.net.ng"];
 const server = http.createServer(app);
 
+app.use(cookieParser())
 app.use(cors({
     origin:origins,
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: [
     "Content-Type",
     "Authorization",
     "X-Requested-With",
     "x-requires-auth",
   ],
+  exposedHeaders: ["Set-Cookie"]
 }));
 
 
 app.use(express.json());
-app.use(cookieParser());
 app.use(session({ secret:process.env.JWT_SECRET, resave: false, saveUninitialized: false}))
 app.use(passport.initialize());
 app.use(passport.session());

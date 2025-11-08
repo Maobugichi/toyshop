@@ -8,13 +8,14 @@ const jwtSecret = process.env.JWT_SECRET;
 export function checkAuth(req, res, next) {
     let token = null;
     
-   
+    
     if (req.cookies.token) {
         token = req.cookies.token;
         console.log("🍪 Token from cookie");
     }
     
-   
+
+    
     if (!token && req.headers.authorization) {
         const authHeader = req.headers.authorization;
         if (authHeader.startsWith("Bearer ")) {
@@ -23,7 +24,7 @@ export function checkAuth(req, res, next) {
         }
     }
     
-
+  
     if (!token) {
         console.log("❌ No token found:", {
             hasCookie: !!req.cookies.token,
@@ -36,13 +37,25 @@ export function checkAuth(req, res, next) {
         });
     }
     
+ 
     try {
         const decoded = jwt.verify(token, jwtSecret);
         req.user = decoded;
-        
+        console.log("✅ Token verified for user:", decoded.userId);
         next();
     } catch(err) {
         console.error("❌ Token verification failed:", err.message);
+        
+  
+        if (req.cookies.token) {
+            res.clearCookie("token", {
+                httpOnly: true,
+                secure: true,
+                sameSite: "none",
+                path: "/"
+            });
+        }
+        
         return res.status(401).json({ 
             message: "Invalid or expired token",
             error: err.name // TokenExpiredError, JsonWebTokenError, etc.
