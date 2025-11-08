@@ -87,42 +87,47 @@ authRouter.get("/google/callback",
     }),
     async (req, res) => {
         try {
-            const isDevelopment = process.env.NODE_ENV === 'development';
-            
             const token = jwt.sign(
                 { userId: req.user.id, email: req.user.email }, 
                 process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
             
-            const cookieOptions = {
-                httpOnly: true,
-                secure: !isDevelopment, 
-                sameSite: isDevelopment ? 'lax' : 'none',
-                maxAge: 7 * 24 * 60 * 60 * 1000,
-                path: "/"
-            };
-            
-            res.cookie("token", token, cookieOptions);
-            
-            res.cookie("auth_data", JSON.stringify({
+            const authData = {
                 user: {
                     id: req.user.id,
                     email: req.user.email,
                     name: req.user.name,
                     avatar_url: req.user.avatar_url
                 },
-                cartId: req.user.cartId
-            }), {
-                httpOnly: false,  
-                secure: !isDevelopment,
-                sameSite: isDevelopment ? 'lax' : 'none',
-                maxAge: 60 * 1000,
-                path: "/"
-            });
+                cartId: req.user.cartId,
+                token: token
+            };
             
             const redirectUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-            res.redirect(`${redirectUrl}/?auth=success`);
+            
+          
+            res.send(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Redirecting...</title>
+                </head>
+                <body>
+                    <p>Authentication successful, redirecting...</p>
+                    <script>
+                        // Store data in localStorage
+                        const authData = ${JSON.stringify(authData)};
+                        localStorage.setItem('user', JSON.stringify(authData.user));
+                        localStorage.setItem('cartId', authData.cartId);
+                        localStorage.setItem('token', authData.token);
+                        
+                        // Redirect to frontend
+                        window.location.href = '${redirectUrl}/?auth=success';
+                    </script>
+                </body>
+                </html>
+            `);
             
         } catch (err) {
             console.error(err);
