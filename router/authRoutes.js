@@ -112,7 +112,7 @@ authRouter.get("/google/callback",
                 };
                 
                 const encodedData = encodeURIComponent(JSON.stringify(authData));
-                res.redirect(`${redirectUrl}/auth/callback?auth=success&data=${encodedData}`);
+                 res.redirect(`${redirectUrl}/#/auth/callback?auth=success&data=${encodedData}`);
                 
             } else {
               
@@ -141,7 +141,7 @@ authRouter.get("/google/callback",
                     maxAge: 60 * 1000
                 });
                 
-                res.redirect(`${redirectUrl}/auth/callback?auth=success`);
+                res.redirect(`${redirectUrl}/#/auth/callback?auth=success`);
             }
             
         } catch (err) {
