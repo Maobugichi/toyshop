@@ -118,7 +118,7 @@ authRouter.get("/google/callback",
                 path: "/"
             });
             
-            res.redirect("localhost:5173/?auth=success");
+            res.redirect("http://localhost:5173/?auth=success");
             
         } catch (err) {
             console.error(err);
