@@ -95,7 +95,7 @@ authRouter.get("/google/callback",
             
             const redirectUrl = process.env.FRONTEND_URL || "http://localhost:5173";
             
-            // Set httpOnly token cookie
+            
             const cookieOptions = {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
@@ -107,7 +107,7 @@ authRouter.get("/google/callback",
             
             res.cookie("token", token, cookieOptions);
             
-            // Pass user data via URL (works for both dev and prod)
+          
             const authData = {
                 user: {
                     id: req.user.id,

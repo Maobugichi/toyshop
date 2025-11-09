@@ -7,7 +7,7 @@ passport.use(new GoogleStrategy(
     {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "https://toyshop-y88v.onrender.com/auth/google/callback",
+        callbackURL: "https://server.thetoyshop.net.ng/auth/google/callback",
     },
 
     async (accessToken, refreshToken, profile, done) => {
@@ -65,10 +65,10 @@ passport.use(new GoogleStrategy(
             }
            }
 
-           // Get or create cart for the user
+         
            const cartId = await getOrCreateCart(user.id);
            
-           // Attach cartId to user object so it's available in the callback
+       
            user.cartId = cartId;
            user.isNewUser = isNewUser;
 
