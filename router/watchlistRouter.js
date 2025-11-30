@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { checkAuth } from "../middleware/check-auth.js";
-import * as wishlistController from "../controllers/wishListController.js"
+import * as wishlistController from "../controllers/wishlistController.js"
 
 const wishRouter = Router();
 
