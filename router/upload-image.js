@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { upload } from "../cloudinary.js";
+import { upload } from "../middleware/upload.js";
 import { uploadProductImages } from "../controllers/upload-image.controller.js";
 
 /*const generateCloudinaryUrls = (publicId) => {
