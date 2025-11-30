@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkAuth } from "../check-auth.js";
+import { checkAuth } from "../middleware/check-auth.js";
 import * as mergeController from "../controllers/merge.controller.js";
 
 const mergeRouter = Router();

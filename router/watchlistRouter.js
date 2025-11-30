@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkAuth } from "../check-auth.js";
+import { checkAuth } from "../middleware/check-auth.js";
 import * as wishlistController from "../controllers/wishListController.js"
 
 const wishRouter = Router();

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { signupLocal , loginLocal } from "../auth/local.js";
-import { sendWelcomeEmail } from "../controllers/autoMail.js";
+import { sendWelcomeEmail } from "../utils/autoMail.js";
 import jwt  from "jsonwebtoken";
 
 const authRouter = Router();

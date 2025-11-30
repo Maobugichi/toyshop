@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkAuth } from "../check-auth.js";
+import { checkAuth } from "../middleware/check-auth.js";
 import * as reviewController from "../controllers/review.controller.js";
 
 const reviewRouter = Router();

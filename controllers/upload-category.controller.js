@@ -1,4 +1,4 @@
-import { insertCategory } from "../services/categoryService.js";
+import { insertCategory } from "../services/upload-category.service.js";
 
 export const createCategory = async (req, res) => {
     const { name, slug, description, is_active } = req.body;

@@ -2,7 +2,7 @@ import { Router } from "express";
 import axios from "axios";
 import crypto from "crypto";
 import pool from "../db.js";
-import { sendTrackingEmail } from "../controllers/autoMail.js";
+import { sendTrackingEmail } from "../utils/autoMail.js";
 
 const nowRouter = Router();
 
