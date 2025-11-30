@@ -13,7 +13,7 @@ import passport from "passport";
 import cartRouter from "./router/cartRouter.js";
 import mergeRouter from "./router/merge.js";
 import checkoutRouter from "./router/checkoutRouter.js";
-import { checkAuth } from "./check-auth.js";
+import { checkAuth } from "./middleware/check-auth.js"
 import nowRouter from "./router/nowpayment.js";
 import reviewRouter from "./router/review.js";
 import wishRouter from "./router/watchlistRouter.js";
