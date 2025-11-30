@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCategory } from "../controllers/categoryController.js";
+import { createCategory } from "../controllers/upload-category.controller.js";
 
 const uploadCategoryRouter = Router();
 
