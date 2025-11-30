@@ -1,4 +1,4 @@
-import pool from "../db.js";
+import pool from "../configs/db.js"
 
 export const insertCategory = async ({ name, slug, description, is_active }) => {
     const query = `

@@ -1,4 +1,4 @@
-import pool from "../db.js";
+import pool from "../configs/db.js"
 
 export const getProducts = async () => {
      const result = await pool.query('SELECT * FROM products');

@@ -1,4 +1,4 @@
-import pool from "../db.js";
+import pool from "../configs/db.js"
 
 
 export const checkOut = async (userId,cartItems , shippingInfo , billingInfo , shippingMethod , promoCode) => {

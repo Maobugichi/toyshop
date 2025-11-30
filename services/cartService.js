@@ -1,4 +1,4 @@
-import pool from "../db.js";
+import pool from "../configs/db.js"
 
 export async function getOrCreateCart(userId) {
   const existing = await pool.query(

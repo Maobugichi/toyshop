@@ -1,5 +1,5 @@
 import jwt  from "jsonwebtoken";
-import pool from "../db.js";
+import pool from "../configs/db.js"
 import bcrypt from "bcrypt";
 import { getOrCreateCart } from "../cart/cartService.js"
 

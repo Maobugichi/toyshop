@@ -1,4 +1,4 @@
-import pool from "../db.js";
+import pool from "../configs/db.js"
 
 export const getUserWishLists = async (userId) => {
     const check = await pool.query(

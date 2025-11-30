@@ -1,4 +1,4 @@
-import pool from "../db.js";
+import pool from "../configs/db.js"
 
 export async function addToCart(req,res) {
     const { cartId , productId , quantity } = req.body;

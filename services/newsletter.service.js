@@ -1,4 +1,4 @@
-import pool from "../db.js";
+import pool from "../configs/db.js"
 import { sendWelcomeEmail } from "../utils/autoMail.js";
 
 export const subscribeToNewsletter = async (email, name) => {
