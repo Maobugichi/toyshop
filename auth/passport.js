@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import pool from "../configs/db.js"
-import { getOrCreateCart } from "../cart/cartService.js";
+import { getOrCreateCart } from "../services/cartService.js";
 
 passport.use(new GoogleStrategy(
     {
